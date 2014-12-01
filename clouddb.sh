@@ -1,6 +1,5 @@
 #!/bin/bash
 #Pedro Silva
-#pedro.silva@rackspace.co.uk
 
 read -p "Whats your username?:" username
 read -p "Whats your APIkey?:" APIkey
