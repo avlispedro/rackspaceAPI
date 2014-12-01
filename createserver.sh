@@ -1,6 +1,6 @@
 #!/bin/bash
 #Pedro Silva 
-#pedro.silva@rackspace.com
+
 
 auth() {
 	read -p "Whats your username:  " username
