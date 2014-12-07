@@ -1,7 +1,7 @@
 #!/bin/bash
 
-read -p "Whats your username?:" username
-read -p "Whats your APIkey?:" APIkey
+read -p "Whats your username?: " username
+read -p "Whats your APIkey?: " APIkey
 echo "$username"
 echo "$APIkey"
 
