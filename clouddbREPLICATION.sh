@@ -9,15 +9,19 @@ curl -s https://identity.api.rackspacecloud.com/v2.0/tokens -X POST \
 -d '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"'$username'", "apiKey":"'$APIkey'"}}}' \
 -H "Content-Type: application/json" | python -m json.tool > /tmp/auth.temp
 
-ddi=`cat /tmp/auth.temp | grep "tenantId" | tail -1 | sed 's/tenantId//g' | tr -d "\"" | tr -d ":" |  sed 's/                     //g'`
-dc=`cat /tmp/auth.temp | grep "RAX-AUTH:defaultRegion" | sed 's/RAX\-AUTH\:defaultRegion//g' | tr '[:upper:]' '[:lower:]'| sed 's/rax\-auth\:defaultregion//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
-token=`cat /tmp/auth.temp | grep -A 1  "expires" | grep -v "expires" | sed 's/id//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
+dditemp=`cat /tmp/auth.temp | grep "tenantId" | tail -1 | sed 's/tenantId//g' | tr -d "\"" | tr -d ":" |  sed 's/                     //g'`
+dctemp=`cat /tmp/auth.temp | grep "RAX-AUTH:defaultRegion" | sed 's/RAX\-AUTH\:defaultRegion//g' | tr '[:upper:]' '[:lower:]'| sed 's/rax\-auth\:defaultregion//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
+tokentemp=`cat /tmp/auth.temp | grep -A 1  "expires" | grep -v "expires" | sed 's/id//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
 
-#echo "--------"
-#echo $ddi
-#echo $dc
-#echo $token
-#echo "--------"
+echo "I think this is the information that you require, can you confirm:"
+echo $dditemp
+echo $dctemp
+echo $tokentemp
+echo "--------"
+
+read -p "Can you please paste DDI: " ddi
+read -p "Can you plese paste Datacenter: " dc
+read -p "Can you please paste the token: " token
 
 while true; do
 	read -p "1 - list instances    2 - test if root enable     3 - enable root   4 - Replication 5 - EXIT : " response
