@@ -1,6 +1,7 @@
 #!/bin/bash
 #Pedro Silva
 
+
 read -p "Whats your username?:  " username
 read -p "Whats your APIkey?:  " APIkey
 
