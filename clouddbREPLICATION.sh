@@ -8,7 +8,7 @@ curl -s https://identity.api.rackspacecloud.com/v2.0/tokens -X POST \
 -d '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"'$username'", "apiKey":"'$APIkey'"}}}' \
 -H "Content-Type: application/json" | python -m json.tool > /tmp/auth.temp
 
-ddi=`cat /tmp/auth.temp | grep -m 1 "tenantId" | sed 's/tenantId//g' | tr -d "\"" | tr -d ":"| sed 's/                         //g'`
+ddi=`cat /tmp/auth.temp | grep "tenantId" | tail -1 | sed 's/tenantId//g' | tr -d "\"" | tr -d ":" |  sed 's/                     //g'`
 dc=`cat /tmp/auth.temp | grep "RAX-AUTH:defaultRegion" | sed 's/RAX\-AUTH\:defaultRegion//g' | tr '[:upper:]' '[:lower:]'| sed 's/rax\-auth\:defaultregion//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
 token=`cat /tmp/auth.temp | grep -A 1  "expires" | grep -v "expires" | sed 's/id//g' | tr -d "\"" | tr -d ":" | tr -d "," | sed 's/             //g'`
 
