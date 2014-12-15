@@ -76,7 +76,19 @@ slaveflavor=0
 	else
 		break
 	fi
-#delete temporary file used to auth
 done
-rm /tmp/auth.temp
-rm /tmp/db.temp
+
+
+#delete temporary file used to auth
+auth="/tmp/auth.temp"
+dbfile="/tmp/db.temp"
+if [ -f $auth ]; then
+	rm $auth
+else
+	echo ""
+fi
+if [ -f $dbfile ]; then
+	rm $dbfile
+else
+	echo ""
+fi
