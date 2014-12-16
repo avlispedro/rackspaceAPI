@@ -66,18 +66,16 @@ slaveflavor=0
 				echo "----------------------------"
                                 echo "The flavor is smaller than the master."
                                 break
-			fi
-		
+			fi	
 			curl -s --ciphers RC4-SHA:RC4-MD5  -X POST -H 'X-Auth-Token: '$token'' -d '{"instance":{"volume":{"size":'$size'},"flavorRef":"'$slaveflavor'","name":"'$slaveinstance'","replica_of":"'$dbid'"}}' 'https://'$dc'.databases.api.rackspacecloud.com/v1.0/'$ddi'/instances' -H 'Content-Type: application/json' | python -m json.tool
 		else
-			echo "Good choise!"
+			echo "Good choise! Be sure what you intend to do first, with great power cames great responsibility."
 		fi
 		
 	else
 		break
 	fi
 done
-
 
 #delete temporary file used to auth
 auth="/tmp/auth.temp"
