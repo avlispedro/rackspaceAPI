@@ -54,12 +54,8 @@ configurationfunction(){
 
 
 
-#read -p "Whats your username?:  " username
-#read -p "Whats your APIkey?:  " APIkey
-
-username=avlispedro
-APIkey=5d74894546dfdfbee9a72af7e3fce54f
-
+read -p "Whats your username?:  " username
+read -p "Whats your APIkey?:  " APIkey
 
 curl -s https://identity.api.rackspacecloud.com/v2.0/tokens -X POST -d '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"'$username'", "apiKey":"'$APIkey'"}}}' -H "Content-Type: application/json" | python -m json.tool > /tmp/auth.temp
 
