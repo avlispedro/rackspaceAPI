@@ -1,10 +1,9 @@
 #!/bin/bash
 #Pedro Silva
 
-
 configurationfunction(){
 		array=()
-                echo "How name parameters do you want to use in you configuration:  "
+                echo "How MANY parameters do you want to use in you configuration:  "
                 read numparam
 
                 index=0
@@ -12,7 +11,7 @@ configurationfunction(){
                         do
                                 echo "What is the parameter name:  "
                                 read parametername
-				echo "The value is a str or int:  "
+				echo "The value is a string or integer, str or int:  "
 	                        read stringint
                                 echo "What is the parameter value:  "
                                 read parametervalue
@@ -32,18 +31,35 @@ configurationfunction(){
 					fi
                                 fi
                         done
-			echo "DEBUG"
-			echo "${array[@]}"
-			echo "DEBUG"
+			#echo "DEBUG"
+			#echo "${array[@]}"
+			#echo "DEBUG"
                         read -p "What will be the Description: " description
                         read -p "What will be the configuration name:  " configname
-                        curl  --ciphers RC4-SHA:RC4-MD5 -X POST -H 'X-Auth-Token: '$token'' -d '{"configuration": {"datastore": {"type": "'$databasetype'", "version": "'$databaseversion'"}, "description": "'$description'", "name": "'$configname'","values": {'${array[@]}'}}}' https://"$dc".databases.api.rackspacecloud.com/v1.0/"$ddi"/configurations -H 'Content-type: application/json' | python -m json.tool
+			allvalues="${array[@]}"
+                        curl --ciphers RC4-SHA:RC4-MD5 -X POST -H "X-Auth-Token: $token" -d "{\"configuration\":{\"datastore\":{\"type\":\"$databasetype\",\"version\":\"$databaseversion\"},\"description\":\"$description\",\"name\":\"$configname\",\"values\":{$allvalues}}}" "https://$dc.databases.api.rackspacecloud.com/v1.0/$ddi/configurations" -H "Content-Type: application/json" | python -m json.tool
+
+#echo "DEBUG"
+#echo ${array[@]}
+#echo $allvalues
+#echo $token
+#echo $databasetype
+#echo $databaseversion
+#echo $description
+#echo $configname
+#echo $dc
+#echo $ddi
+#echo "DEBUG"
 }
 
 
 
-read -p "Whats your username?:  " username
-read -p "Whats your APIkey?:  " APIkey
+#read -p "Whats your username?:  " username
+#read -p "Whats your APIkey?:  " APIkey
+
+username=avlispedro
+APIkey=5d74894546dfdfbee9a72af7e3fce54f
+
 
 curl -s https://identity.api.rackspacecloud.com/v2.0/tokens -X POST -d '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"'$username'", "apiKey":"'$APIkey'"}}}' -H "Content-Type: application/json" | python -m json.tool > /tmp/auth.temp
 
