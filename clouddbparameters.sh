@@ -161,10 +161,12 @@ while true; do
 		read -p "What is the configuration ID that you want to check:  " checkconfig  
 		curl -s --ciphers RC4-SHA:RC4-MD5 -H "X-Auth-Token: $token" https://$dc.databases.api.rackspacecloud.com/v1.0/$ddi/configurations/$checkconfig -H "Content-Type: application/json" | python -m json.tool
 	elif [ $response = 9 ]; then
-                read -p "What is the configuration ID that you want to USE:  " confID
-                curl -s --ciphers RC4-SHA:RC4-MD5 -H 'X-Auth-Token: '$token'' 'https://'$dc'.databases.api.rackspacecloud.com/v1.0/'$ddi'/instances' -H 'Content-Type: application/json' | python -m json.tool
-                read -p "What is the DATABASE ID that you want to use:  " databaseID
-                curl --ciphers RC4-SHA:RC4-MD5 -i -X DELETE -H "X-Auth-Token: $token" -H "Content-Type: application/json" https://$dc.databases.api.rackspacecloud.com/v1.0/$ddi/instances/$databaseID -d "{\"instance\":{\"configuration\":\"$confID\"}}"
+                #read -p "What is the configuration ID that you want to USE:  " confID
+                #curl -s --ciphers RC4-SHA:RC4-MD5 -H 'X-Auth-Token: '$token'' 'https://'$dc'.databases.api.rackspacecloud.com/v1.0/'$ddi'/instances' -H 'Content-Type: application/json' | python -m json.tool
+		echo "Bear in mind that you need to restart the database after removing the configuration"
+		echo ""
+                read -p "What is the DATABASE ID that you want to use remove the configuration:  " databaseID
+                curl --ciphers RC4-SHA:RC4-MD5 -i -X PUT -H "X-Auth-Token: $token" -H "Content-Type: application/json" https://$dc.databases.api.rackspacecloud.com/v1.0/$ddi/instances/$databaseID -d "{\"instance\":{\"configuration\":\"\"}}"
 	else
 		break
 	fi
